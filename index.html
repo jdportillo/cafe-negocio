@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oportunidad de Negocio - Café Premium</title>
+    
+    <!-- VERCEL ANALYTICS - AGREGAR ESTAS LÍNEAS -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    
+    <!-- GOOGLE ANALYTICS (OPCIONAL) - Reemplazar GA_MEASUREMENT_ID con tu ID -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
+    
     <style>
         * {
             margin: 0;
@@ -401,6 +419,13 @@
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
         
+        // VERCEL ANALYTICS - TRACKING EVENTS
+        function trackEvent(eventName, properties = {}) {
+            if (window.va) {
+                window.va('track', eventName, properties);
+            }
+        }
+        
         // Función para detectar orientación con múltiples métodos
         function detectarOrientacion() {
             let orientacion = '';
@@ -436,6 +461,12 @@
             
             console.log(`Cambiando orientación: ${orientacionActual} → ${nuevaOrientacion}`);
             orientacionActual = nuevaOrientacion;
+            
+            // ANALYTICS: Track orientation change
+            trackEvent('OrientationChange', {
+                from: orientacionActual,
+                to: nuevaOrientacion
+            });
             
             // Aplicar clase específica de orientación
             document.body.className = `orientacion-${nuevaOrientacion}`;
@@ -495,6 +526,12 @@
             
             document.getElementById('current-slide').textContent = currentSlide + 1;
             
+            // ANALYTICS: Track slide view
+            trackEvent('SlideView', {
+                slideNumber: currentSlide + 1,
+                slideName: getSlideTitle(currentSlide)
+            });
+            
             // Actualizar botones de navegación
             document.getElementById('prevBtn').disabled = (currentSlide === 0);
             document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
@@ -507,8 +544,27 @@
             }
         }
         
+        // Función auxiliar para obtener título del slide
+        function getSlideTitle(slideIndex) {
+            const titles = [
+                'Introducción',
+                'Preguntas',
+                'Oportunidad',
+                'Beneficios',
+                'Llamada a la Acción'
+            ];
+            return titles[slideIndex] || `Slide ${slideIndex + 1}`;
+        }
+        
         function changeSlide(n) {
             if (currentSlide + n >= 0 && currentSlide + n < totalSlides) {
+                // ANALYTICS: Track navigation
+                trackEvent('SlideNavigation', {
+                    direction: n > 0 ? 'next' : 'previous',
+                    fromSlide: currentSlide + 1,
+                    toSlide: currentSlide + n + 1
+                });
+                
                 showSlide(currentSlide + n);
             }
         }
@@ -517,6 +573,13 @@
             const phoneNumber = '+50378504789';
             const message = 'Hola! Vi tu presentación sobre la oportunidad de café y me interesa saber más. ¿Podríamos conversar 15 minutos sobre esto?';
             const encodedMessage = encodeURIComponent(message);
+            
+            // ANALYTICS: Track WhatsApp click
+            trackEvent('WhatsAppClick', {
+                buttonText: '¡Sí, me interesa!',
+                slideNumber: currentSlide + 1,
+                phoneNumber: phoneNumber
+            });
             
             // Crear el enlace de WhatsApp
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -535,6 +598,13 @@
             const responseYes = document.getElementById('response-yes');
             const responseNo = document.getElementById('response-no');
             
+            // ANALYTICS: Track response
+            trackEvent('UserResponse', {
+                response: response,
+                slideNumber: currentSlide + 1,
+                timestamp: new Date().toISOString()
+            });
+            
             decisionButtons.style.display = 'none';
             
             if (response === 'yes') {
@@ -548,6 +618,14 @@
         
         // Función de inicialización
         function inicializarPresentacion() {
+            // ANALYTICS: Track page load
+            trackEvent('PresentationLoad', {
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString(),
+                referrer: document.referrer,
+                url: window.location.href
+            });
+            
             // Configurar total de slides
             document.getElementById('total-slides').textContent = totalSlides;
             
@@ -570,10 +648,28 @@
             console.log('Presentación inicializada en orientación:', orientacionActual);
         }
         
+        // ANALYTICS: Track session duration
+        let sessionStartTime = Date.now();
+        
+        window.addEventListener('beforeunload', function() {
+            const sessionDuration = Math.round((Date.now() - sessionStartTime) / 1000);
+            trackEvent('SessionEnd', {
+                duration: sessionDuration,
+                lastSlide: currentSlide + 1,
+                completed: currentSlide === totalSlides - 1
+            });
+        });
+        
         // Navegación con teclado
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') changeSlide(-1);
-            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') {
+                trackEvent('KeyboardNavigation', { key: 'ArrowLeft' });
+                changeSlide(-1);
+            }
+            if (e.key === 'ArrowRight') {
+                trackEvent('KeyboardNavigation', { key: 'ArrowRight' });
+                changeSlide(1);
+            }
         });
         
         // Navegación táctil para móviles
@@ -596,8 +692,10 @@
             
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (diffX > 50) {
+                    trackEvent('TouchNavigation', { direction: 'swipe-left' });
                     changeSlide(1); // Deslizar izquierda = siguiente
                 } else if (diffX < -50) {
+                    trackEvent('TouchNavigation', { direction: 'swipe-right' });
                     changeSlide(-1); // Deslizar derecha = anterior
                 }
             }
