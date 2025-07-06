@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oportunidad de Negocio - Café Premium</title>
+    <title>Café Premium con Ganoderma Lucidum - Oportunidad de Negocio</title>
     
-    <!-- VERCEL ANALYTICS - AGREGAR ESTAS LÍNEAS -->
+    <!-- VERCEL ANALYTICS -->
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
     
-    <!-- GOOGLE ANALYTICS (OPCIONAL) - Reemplazar GA_MEASUREMENT_ID con tu ID -->
-    <!-- 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    -->
+    <!-- SEO Optimizations -->
+    <meta name="description" content="Descubre el café premium enriquecido con Ganoderma Lucidum. Una oportunidad única que combina salud y negocio.">
+    <meta name="keywords" content="café, ganoderma lucidum, negocio, salud, oportunidad, ingresos">
+    <meta name="theme-color" content="#8B4513">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <style>
         * {
@@ -37,82 +33,7 @@
             justify-content: center;
             align-items: center;
             padding: 10px;
-            overflow: hidden;
-        }
-        
-        /* Estilos para orientación portrait */
-        @media screen and (orientation: portrait) {
-            .presentation-container {
-                max-width: 95vw !important;
-                min-height: 80vh !important;
-                flex-direction: column;
-            }
-            
-            .slide {
-                padding: 20px 15px !important;
-                font-size: 0.9em;
-            }
-            
-            .slide h1 {
-                font-size: 1.8em !important;
-                margin-bottom: 15px !important;
-            }
-            
-            .slide h2 {
-                font-size: 1.5em !important;
-                margin-bottom: 12px !important;
-            }
-            
-            .benefits-grid {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
-            }
-            
-            .decision-buttons {
-                flex-direction: column !important;
-                gap: 10px !important;
-            }
-            
-            .decision-btn {
-                padding: 12px 25px !important;
-                font-size: 1em !important;
-            }
-        }
-        
-        /* Estilos para orientación landscape */
-        @media screen and (orientation: landscape) {
-            .presentation-container {
-                max-width: 800px !important;
-                min-height: 90vh !important;
-            }
-            
-            .slide {
-                padding: 25px 30px !important;
-            }
-            
-            .benefits-grid {
-                grid-template-columns: 1fr 1fr !important;
-            }
-            
-            .decision-buttons {
-                flex-direction: row !important;
-            }
-        }
-        
-        /* Adaptaciones para dispositivos pequeños */
-        @media screen and (max-width: 480px) {
-            .presentation-container {
-                margin: 5px;
-                border-radius: 15px;
-            }
-            
-            .slide {
-                min-height: 350px !important;
-            }
-            
-            .coffee-icon {
-                font-size: 3em !important;
-            }
+            overflow-x: hidden;
         }
         
         .presentation-container {
@@ -123,11 +44,12 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             position: relative;
+            margin-bottom: 80px; /* Espacio para navegación */
         }
         
         .slide {
             display: none;
-            padding: 30px 25px;
+            padding: 30px 25px 20px 25px; /* Reducido padding bottom para navegación */
             text-align: center;
             min-height: 400px;
             position: relative;
@@ -184,42 +106,92 @@
             margin-bottom: 8px;
         }
         
-        .navigation {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
+        .ganoderma-highlight {
+            background: linear-gradient(135deg, #E8F5E8, #D4F1D4);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid #4CAF50;
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.2);
+        }
+        
+        .ganoderma-benefits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .ganoderma-benefit {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            text-align: center;
+        }
+        
+        /* NAVEGACIÓN FIJA EN LA PARTE INFERIOR */
+        .navigation-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(139, 69, 19, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .nav-btn {
-            background: #8B4513;
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            color: #4A2C14;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 1em;
+            font-weight: bold;
             transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
         }
         
         .nav-btn:hover {
-            background: #6B4423;
+            background: white;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .nav-btn:disabled {
-            background: #ccc;
+            background: rgba(255, 255, 255, 0.5);
+            color: #999;
             cursor: not-allowed;
             transform: none;
+        }
+        
+        .slide-indicator {
+            background: rgba(255, 255, 255, 0.9);
+            color: #4A2C14;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
         }
         
         .decision-buttons {
             display: flex;
             gap: 15px;
             justify-content: center;
-            margin-top: 30px;
+            margin: 30px 0 20px 0; /* Agregado margin bottom para navegación */
         }
         
         .decision-btn {
@@ -256,7 +228,7 @@
         .response-message {
             display: none;
             padding: 20px;
-            margin-top: 20px;
+            margin: 20px 0;
             border-radius: 15px;
             text-align: center;
             font-size: 1.1em;
@@ -292,23 +264,121 @@
             margin: 15px 0;
             border-left: 4px solid #8B4513;
         }
+        
+        /* ESTILOS RESPONSIVE */
+        @media screen and (orientation: portrait) {
+            .presentation-container {
+                max-width: 95vw;
+                margin-bottom: 90px;
+            }
+            
+            .slide {
+                padding: 20px 15px 15px 15px;
+                font-size: 0.9em;
+            }
+            
+            .slide h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+            
+            .slide h2 {
+                font-size: 1.5em;
+                margin-bottom: 12px;
+            }
+            
+            .benefits-grid, .ganoderma-benefits {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .decision-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .decision-btn {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 10px 25px;
+                font-size: 0.9em;
+            }
+        }
+        
+        @media screen and (orientation: landscape) {
+            .presentation-container {
+                max-width: 800px;
+                margin-bottom: 80px;
+            }
+            
+            .slide {
+                padding: 25px 30px 20px 30px;
+            }
+            
+            .navigation {
+                flex-direction: row;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .presentation-container {
+                margin: 5px 5px 95px 5px;
+                border-radius: 15px;
+            }
+            
+            .slide {
+                min-height: 350px;
+            }
+            
+            .coffee-icon {
+                font-size: 3em;
+            }
+            
+            .navigation-container {
+                padding: 12px;
+            }
+        }
+        
+        /* ANIMACIONES SUAVES */
+        .slide {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.4s ease;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide.prev {
+            transform: translateX(-50px);
+        }
     </style>
 </head>
 <body>
     <div class="presentation-container">
         <div class="slide-counter">
-            <span id="current-slide">1</span> / <span id="total-slides">5</span>
+            <span id="current-slide">1</span> / <span id="total-slides">6</span>
         </div>
         
         <!-- Slide 1: Introducción -->
         <div class="slide active">
             <div class="coffee-icon">☕</div>
             <h1>¿Te Gusta el Café?</h1>
-            <p>Hola, he encontrado algo interesante que me gustaría compartir contigo.</p>
+            <p>Hola, he encontrado algo extraordinario que me gustaría compartir contigo.</p>
             <div class="highlight">
-                <p><strong>¿Qué tal si pudieras combinar tu amor por el café con una oportunidad de ingresos adicionales?</strong></p>
+                <p><strong>¿Qué tal si pudieras combinar tu amor por el café con beneficios para tu salud Y una oportunidad de ingresos adicionales?</strong></p>
             </div>
-            <p>Solo necesito 5 minutos de tu tiempo para mostrarte algo que podría interesarte.</p>
+            <p>Solo necesito 5 minutos de tu tiempo para mostrarte algo que podría transformar tu día a día.</p>
         </div>
         
         <!-- Slide 2: El Problema -->
@@ -320,38 +390,67 @@
                     <p><strong>¿Cómo generar ingresos extra?</strong></p>
                 </div>
                 <div class="benefit-item">
+                    <div class="icon">🌿</div>
+                    <p><strong>¿Cómo mejorar tu salud diariamente?</strong></p>
+                </div>
+                <div class="benefit-item">
                     <div class="icon">☕</div>
-                    <p><strong>¿Dónde encontrar café premium?</strong></p>
+                    <p><strong>¿Dónde encontrar café verdaderamente premium?</strong></p>
                 </div>
                 <div class="benefit-item">
                     <div class="icon">🏠</div>
                     <p><strong>¿Trabajar desde casa?</strong></p>
                 </div>
-                <div class="benefit-item">
-                    <div class="icon">👥</div>
-                    <p><strong>¿Conocer gente nueva?</strong></p>
+            </div>
+            <p>Tengo una respuesta que podría resolver <strong>todas</strong> estas preguntas...</p>
+        </div>
+        
+        <!-- Slide 3: Ganoderma Lucidum -->
+        <div class="slide">
+            <h2>🍄 Conoce el Ganoderma Lucidum</h2>
+            <div class="coffee-icon">🌿</div>
+            <p>Nuestro café no es cualquier café. Está <strong>enriquecido con Ganoderma Lucidum</strong>, conocido como el "Hongo de la Inmortalidad".</p>
+            
+            <div class="ganoderma-highlight">
+                <h3 style="color: #2E7D32; margin-bottom: 15px;">🌟 Beneficios del Ganoderma Lucidum:</h3>
+                <div class="ganoderma-benefits">
+                    <div class="ganoderma-benefit">
+                        <strong>💪 Fortalece</strong><br>el sistema inmunológico
+                    </div>
+                    <div class="ganoderma-benefit">
+                        <strong>⚡ Aumenta</strong><br>los niveles de energía
+                    </div>
+                    <div class="ganoderma-benefit">
+                        <strong>😌 Reduce</strong><br>el estrés y ansiedad
+                    </div>
+                    <div class="ganoderma-benefit">
+                        <strong>❤️ Mejora</strong><br>la salud cardiovascular
+                    </div>
                 </div>
+                <p style="margin-top: 15px; font-style: italic; color: #2E7D32;">
+                    <strong>¡Imagínate tomar tu café favorito mientras cuidas tu salud!</strong>
+                </p>
             </div>
-            <p>Tengo una respuesta que podría resolver varias de estas preguntas...</p>
         </div>
         
-        <!-- Slide 3: La Solución -->
+        <!-- Slide 4: La Oportunidad -->
         <div class="slide">
-            <h2>La Oportunidad</h2>
+            <h2>La Oportunidad Perfecta</h2>
             <div class="coffee-icon">🌟</div>
-            <p>Trabajo con una empresa de café que ofrece:</p>
+            <p>Trabajo con una empresa innovadora que ofrece:</p>
             <div class="highlight">
-                <p><strong>✓ Productos de café premium de alta calidad</strong></p>
-                <p><strong>✓ Un modelo de negocio comprobado</strong></p>
+                <p><strong>✓ Café premium enriquecido con Ganoderma Lucidum</strong></p>
+                <p><strong>✓ Beneficios comprobados para la salud</strong></p>
+                <p><strong>✓ Un modelo de negocio sólido y rentable</strong></p>
                 <p><strong>✓ Oportunidad de ingresos adicionales</strong></p>
-                <p><strong>✓ Flexibilidad de horarios</strong></p>
+                <p><strong>✓ Flexibilidad total de horarios</strong></p>
             </div>
-            <p>No es solo vender café... es compartir una experiencia premium mientras generas ingresos.</p>
+            <p>No es solo vender café... es <strong>compartir salud y bienestar</strong> mientras generas ingresos sostenibles.</p>
         </div>
         
-        <!-- Slide 4: Los Beneficios -->
+        <!-- Slide 5: Los Beneficios -->
         <div class="slide">
-            <h2>¿Por Qué Podría Interesarte?</h2>
+            <h2>¿Por Qué Esta Oportunidad es Única?</h2>
             <div class="benefits-grid">
                 <div class="benefit-item">
                     <div class="icon">🎯</div>
@@ -366,21 +465,25 @@
                     <p><strong>Apoyo Constante</strong><br>Equipo que te respalda</p>
                 </div>
                 <div class="benefit-item">
-                    <div class="icon">💎</div>
-                    <p><strong>Producto Premium</strong><br>Calidad excepcional</p>
+                    <div class="icon">🌿</div>
+                    <p><strong>Producto Premium</strong><br>Calidad y salud garantizadas</p>
                 </div>
             </div>
-            <p>Lo mejor de todo: <strong>empiezas disfrutando el mejor café mientras conoces el negocio.</strong></p>
+            <p>Lo mejor de todo: <strong>empiezas disfrutando el mejor café con beneficios para tu salud mientras conoces el negocio.</strong></p>
         </div>
         
-        <!-- Slide 5: Llamada a la Acción -->
+        <!-- Slide 6: Llamada a la Acción -->
         <div class="slide">
             <h2>¿Te Interesa Saber Más?</h2>
             <div class="coffee-icon">🤔</div>
-            <p>No hay compromiso, solo una conversación amigable donde puedes hacer todas las preguntas que quieras.</p>
+            <p>No hay compromiso, solo una conversación amigable donde puedes hacer todas las preguntas que quieras sobre:</p>
             <div class="highlight">
-                <p><strong>¿Qué opinas? ¿Te gustaría que conversemos 15 minutos sobre esta oportunidad?</strong></p>
+                <p><strong>🌿 Los beneficios del Ganoderma Lucidum</strong></p>
+                <p><strong>☕ La calidad premium de nuestro café</strong></p>
+                <p><strong>💰 Las oportunidades de ingresos</strong></p>
+                <p><strong>🎯 Cómo puedes empezar sin riesgos</strong></p>
             </div>
+            <p style="font-size: 1.2em; margin: 20px 0;"><strong>¿Qué opinas? ¿Te gustaría que conversemos 15 minutos sobre esta oportunidad única?</strong></p>
             
             <div class="decision-buttons">
                 <button class="decision-btn btn-yes" onclick="openWhatsApp()">
@@ -393,31 +496,38 @@
             
             <div id="response-yes" class="response-message response-yes">
                 <h3>¡Excelente! 🎉</h3>
-                <p><strong>Me alegra mucho tu interés.</strong></p>
-                <p>Te enviaré un mensaje para coordinar una llamada de 15 minutos donde podrás conocer todos los detalles sin compromiso.</p>
-                <p>¡Estoy seguro de que te va a gustar lo que tengo para compartir contigo!</p>
+                <p><strong>Me alegra mucho tu interés en conocer más sobre nuestro café con Ganoderma Lucidum.</strong></p>
+                <p>Te enviaré un mensaje para coordinar una llamada de 15 minutos donde podrás conocer todos los detalles sobre los beneficios para la salud y las oportunidades de negocio, sin compromiso.</p>
+                <p>¡Estoy seguro de que te va a encantar lo que tengo para compartir contigo!</p>
             </div>
             
             <div id="response-no" class="response-message response-no">
                 <h3>¡Totalmente entendible! 😊</h3>
-                <p><strong>Gracias por tu tiempo y por escuchar.</strong></p>
-                <p>No hay problema en absoluto. Aprecio tu honestidad y el tiempo que dedicaste a conocer sobre esta oportunidad.</p>
-                <p>¡Que tengas un excelente día!</p>
+                <p><strong>Gracias por tu tiempo y por conocer nuestra propuesta.</strong></p>
+                <p>No hay problema en absoluto. Aprecio tu honestidad y el tiempo que dedicaste a conocer sobre el café con Ganoderma Lucidum.</p>
+                <p>¡Que tengas un excelente día y mucha salud!</p>
             </div>
         </div>
-        
+    </div>
+    
+    <!-- NAVEGACIÓN FIJA EN LA PARTE INFERIOR -->
+    <div class="navigation-container">
         <div class="navigation">
             <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <div class="slide-indicator">
+                <span id="nav-current-slide">1</span> / <span id="nav-total-slides">6</span>
+            </div>
             <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
         </div>
     </div>
 
     <script>
-        // Variables globales para gestión de orientación
+        // Variables globales
         let orientacionActual = '';
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
+        let sessionStartTime = Date.now();
         
         // VERCEL ANALYTICS - TRACKING EVENTS
         function trackEvent(eventName, properties = {}) {
@@ -426,24 +536,15 @@
             }
         }
         
-        // Función para detectar orientación con múltiples métodos
+        // Función para detectar orientación
         function detectarOrientacion() {
-            let orientacion = '';
-            
-            // Método 1: Screen Orientation API (moderno)
             if (screen.orientation) {
-                orientacion = screen.orientation.type.includes('portrait') ? 'portrait' : 'landscape';
+                return screen.orientation.type.includes('portrait') ? 'portrait' : 'landscape';
+            } else if (typeof window.orientation !== 'undefined') {
+                return (window.orientation === 0 || window.orientation === 180) ? 'portrait' : 'landscape';
+            } else {
+                return window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
             }
-            // Método 2: window.orientation (legacy)
-            else if (typeof window.orientation !== 'undefined') {
-                orientacion = (window.orientation === 0 || window.orientation === 180) ? 'portrait' : 'landscape';
-            }
-            // Método 3: dimensiones de pantalla (fallback)
-            else {
-                orientacion = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
-            }
-            
-            return orientacion;
         }
         
         // Función throttle para optimizar rendimiento
@@ -459,96 +560,54 @@
         function adaptarPresentacion(nuevaOrientacion) {
             if (orientacionActual === nuevaOrientacion) return;
             
-            console.log(`Cambiando orientación: ${orientacionActual} → ${nuevaOrientacion}`);
             orientacionActual = nuevaOrientacion;
-            
-            // ANALYTICS: Track orientation change
             trackEvent('OrientationChange', {
                 from: orientacionActual,
                 to: nuevaOrientacion
             });
             
-            // Aplicar clase específica de orientación
             document.body.className = `orientacion-${nuevaOrientacion}`;
-            
-            // Recalcular dimensiones con retraso para completar animación
-            setTimeout(() => {
-                recalcularDimensiones();
-                ajustarContenidoSlides();
-            }, 150);
         }
         
-        // Función para recalcular dimensiones
-        function recalcularDimensiones() {
-            const container = document.querySelector('.presentation-container');
-            const viewportHeight = window.innerHeight;
-            const viewportWidth = window.innerWidth;
-            
-            // Ajustar altura mínima basada en orientación
-            if (orientacionActual === 'portrait') {
-                container.style.minHeight = Math.min(viewportHeight * 0.85, 600) + 'px';
-                container.style.maxWidth = Math.min(viewportWidth * 0.95, 500) + 'px';
-            } else {
-                container.style.minHeight = Math.min(viewportHeight * 0.90, 500) + 'px';
-                container.style.maxWidth = Math.min(viewportWidth * 0.85, 800) + 'px';
-            }
-        }
-        
-        // Función para ajustar contenido de slides
-        function ajustarContenidoSlides() {
-            const benefitsGrids = document.querySelectorAll('.benefits-grid');
-            
-            benefitsGrids.forEach(grid => {
-                if (orientacionActual === 'portrait') {
-                    grid.style.gridTemplateColumns = '1fr';
-                } else {
-                    grid.style.gridTemplateColumns = '1fr 1fr';
-                }
-            });
-        }
-        
-        // Event listeners optimizados para detectar cambios de orientación
-        const manejarCambioOrientacion = throttle(function() {
-            const nuevaOrientacion = detectarOrientacion();
-            adaptarPresentacion(nuevaOrientacion);
+        // Event listeners para orientación
+        const manejarCambioOrientacion = throttle(() => {
+            adaptarPresentacion(detectarOrientacion());
         }, 100);
-        
-        const manejarRedimensionamiento = throttle(function() {
-            const nuevaOrientacion = detectarOrientacion();
-            adaptarPresentacion(nuevaOrientacion);
-        }, 150);
         
         // Función principal de navegación
         function showSlide(n) {
+            // Remover clases previas
             slides[currentSlide].classList.remove('active');
-            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('prev');
+            
+            currentSlide = Math.max(0, Math.min(n, totalSlides - 1));
+            
+            // Limpiar todas las clases y activar slide actual
+            slides.forEach(slide => {
+                slide.classList.remove('active', 'prev');
+            });
             slides[currentSlide].classList.add('active');
             
+            // Actualizar contadores
             document.getElementById('current-slide').textContent = currentSlide + 1;
+            document.getElementById('nav-current-slide').textContent = currentSlide + 1;
             
-            // ANALYTICS: Track slide view
+            // Analytics
             trackEvent('SlideView', {
                 slideNumber: currentSlide + 1,
                 slideName: getSlideTitle(currentSlide)
             });
             
-            // Actualizar botones de navegación
+            // Actualizar botones
             document.getElementById('prevBtn').disabled = (currentSlide === 0);
             document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
-            
-            // Ocultar navegación en la última slide
-            if (currentSlide === totalSlides - 1) {
-                document.querySelector('.navigation').style.display = 'none';
-            } else {
-                document.querySelector('.navigation').style.display = 'flex';
-            }
         }
         
-        // Función auxiliar para obtener título del slide
         function getSlideTitle(slideIndex) {
             const titles = [
                 'Introducción',
                 'Preguntas',
+                'Ganoderma Lucidum',
                 'Oportunidad',
                 'Beneficios',
                 'Llamada a la Acción'
@@ -557,37 +616,31 @@
         }
         
         function changeSlide(n) {
-            if (currentSlide + n >= 0 && currentSlide + n < totalSlides) {
-                // ANALYTICS: Track navigation
+            const newSlide = currentSlide + n;
+            if (newSlide >= 0 && newSlide < totalSlides) {
                 trackEvent('SlideNavigation', {
                     direction: n > 0 ? 'next' : 'previous',
                     fromSlide: currentSlide + 1,
-                    toSlide: currentSlide + n + 1
+                    toSlide: newSlide + 1
                 });
-                
-                showSlide(currentSlide + n);
+                showSlide(newSlide);
             }
         }
         
         function openWhatsApp() {
             const phoneNumber = '+50378504789';
-            const message = 'Hola! Vi tu presentación sobre la oportunidad de café y me interesa saber más. ¿Podríamos conversar 15 minutos sobre esto?';
+            const message = 'Hola! Vi tu presentación sobre el café con Ganoderma Lucidum y me interesa saber más sobre los beneficios para la salud y la oportunidad de negocio. ¿Podríamos conversar 15 minutos?';
             const encodedMessage = encodeURIComponent(message);
             
-            // ANALYTICS: Track WhatsApp click
             trackEvent('WhatsAppClick', {
                 buttonText: '¡Sí, me interesa!',
                 slideNumber: currentSlide + 1,
                 phoneNumber: phoneNumber
             });
             
-            // Crear el enlace de WhatsApp
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            // Abrir WhatsApp
             window.open(whatsappUrl, '_blank');
             
-            // Mostrar mensaje de confirmación después de un pequeño delay
             setTimeout(() => {
                 showResponse('yes');
             }, 1000);
@@ -598,7 +651,6 @@
             const responseYes = document.getElementById('response-yes');
             const responseNo = document.getElementById('response-no');
             
-            // ANALYTICS: Track response
             trackEvent('UserResponse', {
                 response: response,
                 slideNumber: currentSlide + 1,
@@ -618,7 +670,6 @@
         
         // Función de inicialización
         function inicializarPresentacion() {
-            // ANALYTICS: Track page load
             trackEvent('PresentationLoad', {
                 userAgent: navigator.userAgent,
                 timestamp: new Date().toISOString(),
@@ -626,31 +677,26 @@
                 url: window.location.href
             });
             
-            // Configurar total de slides
             document.getElementById('total-slides').textContent = totalSlides;
+            document.getElementById('nav-total-slides').textContent = totalSlides;
             
-            // Detectar orientación inicial
             orientacionActual = detectarOrientacion();
             adaptarPresentacion(orientacionActual);
             
-            // Configurar event listeners
             if (screen.orientation) {
                 screen.orientation.addEventListener('change', manejarCambioOrientacion);
             } else {
                 window.addEventListener('orientationchange', manejarCambioOrientacion);
             }
             
-            window.addEventListener('resize', manejarRedimensionamiento);
+            window.addEventListener('resize', throttle(() => {
+                adaptarPresentacion(detectarOrientacion());
+            }, 150));
             
-            // Configurar navegación inicial
             showSlide(0);
-            
-            console.log('Presentación inicializada en orientación:', orientacionActual);
         }
         
-        // ANALYTICS: Track session duration
-        let sessionStartTime = Date.now();
-        
+        // Track session duration
         window.addEventListener('beforeunload', function() {
             const sessionDuration = Math.round((Date.now() - sessionStartTime) / 1000);
             trackEvent('SessionEnd', {
@@ -672,7 +718,7 @@
             }
         });
         
-        // Navegación táctil para móviles
+        // Navegación táctil
         let startX = 0;
         let startY = 0;
         
@@ -690,13 +736,13 @@
             let diffX = startX - endX;
             let diffY = startY - endY;
             
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (diffX > 50) {
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
                     trackEvent('TouchNavigation', { direction: 'swipe-left' });
-                    changeSlide(1); // Deslizar izquierda = siguiente
-                } else if (diffX < -50) {
+                    changeSlide(1);
+                } else {
                     trackEvent('TouchNavigation', { direction: 'swipe-right' });
-                    changeSlide(-1); // Deslizar derecha = anterior
+                    changeSlide(-1);
                 }
             }
             
@@ -704,13 +750,9 @@
             startY = 0;
         });
         
-        // Inicializar cuando el DOM esté listo
+        // Inicializar
         document.addEventListener('DOMContentLoaded', inicializarPresentacion);
-        
-        // Fallback para navegadores antiguos
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', inicializarPresentacion);
-        } else {
+        if (document.readyState !== 'loading') {
             inicializarPresentacion();
         }
     </script>
