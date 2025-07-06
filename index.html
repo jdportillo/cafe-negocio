@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Café Premium con Ganoderma Lucidum - Oportunidad de Negocio</title>
     
-    <!-- VERCEL ANALYTICS -->
+    <!-- VERCEL ANALYTICS Y SPEED INSIGHTS -->
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
+    
+    <!-- VERCEL SPEED INSIGHTS -->
+    <script>
+        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
     
     <!-- SEO Optimizations -->
     <meta name="description" content="Descubre el café premium enriquecido con Ganoderma Lucidum. Una oportunidad única que combina salud y negocio.">
@@ -529,11 +535,46 @@
         const totalSlides = slides.length;
         let sessionStartTime = Date.now();
         
-        // VERCEL ANALYTICS - TRACKING EVENTS
+        // VERCEL ANALYTICS Y SPEED INSIGHTS - TRACKING EVENTS
         function trackEvent(eventName, properties = {}) {
             if (window.va) {
                 window.va('track', eventName, properties);
             }
+        }
+        
+        // SPEED INSIGHTS - Track performance metrics
+        function trackPerformance(metricName, value, properties = {}) {
+            if (window.si) {
+                window.si('track', metricName, value, properties);
+            }
+        }
+        
+        // Monitorear métricas de rendimiento personalizadas
+        function measureLoadingTime() {
+            // Tiempo de carga inicial
+            window.addEventListener('load', () => {
+                const loadTime = performance.now();
+                trackPerformance('InitialLoad', loadTime, {
+                    userAgent: navigator.userAgent,
+                    orientation: detectarOrientacion()
+                });
+            });
+            
+            // Tiempo de navegación entre slides
+            let slideChangeStart = 0;
+            window.slideChangeStart = () => {
+                slideChangeStart = performance.now();
+            };
+            
+            window.slideChangeEnd = () => {
+                if (slideChangeStart > 0) {
+                    const slideChangeTime = performance.now() - slideChangeStart;
+                    trackPerformance('SlideTransition', slideChangeTime, {
+                        fromSlide: currentSlide,
+                        orientation: orientacionActual
+                    });
+                }
+            };
         }
         
         // Función para detectar orientación
@@ -576,6 +617,9 @@
         
         // Función principal de navegación
         function showSlide(n) {
+            // Iniciar medición de tiempo de transición
+            if (window.slideChangeStart) window.slideChangeStart();
+            
             // Remover clases previas
             slides[currentSlide].classList.remove('active');
             slides[currentSlide].classList.add('prev');
@@ -597,6 +641,11 @@
                 slideNumber: currentSlide + 1,
                 slideName: getSlideTitle(currentSlide)
             });
+            
+            // Finalizar medición de tiempo de transición
+            setTimeout(() => {
+                if (window.slideChangeEnd) window.slideChangeEnd();
+            }, 400); // Esperar a que termine la animación
             
             // Actualizar botones
             document.getElementById('prevBtn').disabled = (currentSlide === 0);
@@ -670,6 +719,9 @@
         
         // Función de inicialización
         function inicializarPresentacion() {
+            // Inicializar medición de rendimiento
+            measureLoadingTime();
+            
             trackEvent('PresentationLoad', {
                 userAgent: navigator.userAgent,
                 timestamp: new Date().toISOString(),
@@ -694,6 +746,47 @@
             }, 150));
             
             showSlide(0);
+            
+            // Monitorear Core Web Vitals personalizados
+            monitorearWebVitals();
+        }
+        
+        // Función para monitorear Web Vitals personalizados
+        function monitorearWebVitals() {
+            // Monitorear tiempo de interacción
+            let firstInteraction = false;
+            const trackFirstInteraction = () => {
+                if (!firstInteraction) {
+                    firstInteraction = true;
+                    const timeToInteraction = performance.now();
+                    trackPerformance('TimeToFirstInteraction', timeToInteraction, {
+                        device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+                        orientation: orientacionActual
+                    });
+                }
+            };
+            
+            document.addEventListener('click', trackFirstInteraction, { once: true });
+            document.addEventListener('touchstart', trackFirstInteraction, { once: true });
+            document.addEventListener('keydown', trackFirstInteraction, { once: true });
+            
+            // Monitorear cambios de orientación que afecten rendimiento
+            let orientationChangeTime = 0;
+            const trackOrientationPerformance = () => {
+                orientationChangeTime = performance.now();
+                setTimeout(() => {
+                    const adaptationTime = performance.now() - orientationChangeTime;
+                    trackPerformance('OrientationAdaptation', adaptationTime, {
+                        newOrientation: detectarOrientacion()
+                    });
+                }, 200);
+            };
+            
+            if (screen.orientation) {
+                screen.orientation.addEventListener('change', trackOrientationPerformance);
+            } else {
+                window.addEventListener('orientationchange', trackOrientationPerformance);
+            }
         }
         
         // Track session duration
