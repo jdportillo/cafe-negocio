@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oportunidad de Negocio - Café Premium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6B4423 0%, #8B4513 50%, #A0522D 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow: hidden;
+        }
+        
+        /* Estilos para orientación portrait */
+        @media screen and (orientation: portrait) {
+            .presentation-container {
+                max-width: 95vw !important;
+                min-height: 80vh !important;
+                flex-direction: column;
+            }
+            
+            .slide {
+                padding: 20px 15px !important;
+                font-size: 0.9em;
+            }
+            
+            .slide h1 {
+                font-size: 1.8em !important;
+                margin-bottom: 15px !important;
+            }
+            
+            .slide h2 {
+                font-size: 1.5em !important;
+                margin-bottom: 12px !important;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            
+            .decision-buttons {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .decision-btn {
+                padding: 12px 25px !important;
+                font-size: 1em !important;
+            }
+        }
+        
+        /* Estilos para orientación landscape */
+        @media screen and (orientation: landscape) {
+            .presentation-container {
+                max-width: 800px !important;
+                min-height: 90vh !important;
+            }
+            
+            .slide {
+                padding: 25px 30px !important;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            
+            .decision-buttons {
+                flex-direction: row !important;
+            }
+        }
+        
+        /* Adaptaciones para dispositivos pequeños */
+        @media screen and (max-width: 480px) {
+            .presentation-container {
+                margin: 5px;
+                border-radius: 15px;
+            }
+            
+            .slide {
+                min-height: 350px !important;
+            }
+            
+            .coffee-icon {
+                font-size: 3em !important;
+            }
+        }
+        
+        .presentation-container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            display: none;
+            padding: 30px 25px;
+            text-align: center;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide h1 {
+            color: #4A2C14;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .slide h2 {
+            color: #6B4423;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        .slide p {
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .coffee-icon {
+            font-size: 4em;
+            color: #8B4513;
+            margin: 15px 0;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .benefit-item {
+            background: linear-gradient(135deg, #F4E4BC, #E8D5B7);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-item .icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: #8B4513;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #6B4423;
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .decision-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .decision-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .btn-yes {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        
+        .btn-yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        .btn-no {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            color: white;
+        }
+        
+        .btn-no:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+        
+        .response-message {
+            display: none;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .response-yes {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+        
+        .response-no {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+        
+        .slide-counter {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(139, 69, 19, 0.8);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #FFE4B5, #F4E4BC);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #8B4513;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">5</span>
+        </div>
+        
+        <!-- Slide 1: Introducción -->
+        <div class="slide active">
+            <div class="coffee-icon">☕</div>
+            <h1>¿Te Gusta el Café?</h1>
+            <p>Hola, he encontrado algo interesante que me gustaría compartir contigo.</p>
+            <div class="highlight">
+                <p><strong>¿Qué tal si pudieras combinar tu amor por el café con una oportunidad de ingresos adicionales?</strong></p>
+            </div>
+            <p>Solo necesito 5 minutos de tu tiempo para mostrarte algo que podría interesarte.</p>
+        </div>
+        
+        <!-- Slide 2: El Problema -->
+        <div class="slide">
+            <h2>¿Te Has Preguntado...?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="icon">💰</div>
+                    <p><strong>¿Cómo generar ingresos extra?</strong></p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon">☕</div>
+                    <p><strong>¿Dónde encontrar café premium?</strong></p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon">🏠</div>
+                    <p><strong>¿Trabajar desde casa?</strong></p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon">👥</div>
+                    <p><strong>¿Conocer gente nueva?</strong></p>
+                </div>
+            </div>
+            <p>Tengo una respuesta que podría resolver varias de estas preguntas...</p>
+        </div>
+        
+        <!-- Slide 3: La Solución -->
+        <div class="slide">
+            <h2>La Oportunidad</h2>
+            <div class="coffee-icon">🌟</div>
+            <p>Trabajo con una empresa de café que ofrece:</p>
+            <div class="highlight">
+                <p><strong>✓ Productos de café premium de alta calidad</strong></p>
+                <p><strong>✓ Un modelo de negocio comprobado</strong></p>
+                <p><strong>✓ Oportunidad de ingresos adicionales</strong></p>
+                <p><strong>✓ Flexibilidad de horarios</strong></p>
+            </div>
+            <p>No es solo vender café... es compartir una experiencia premium mientras generas ingresos.</p>
+        </div>
+        
+        <!-- Slide 4: Los Beneficios -->
+        <div class="slide">
+            <h2>¿Por Qué Podría Interesarte?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="icon">🎯</div>
+                    <p><strong>Sin Experiencia Previa</strong><br>Te capacitamos completamente</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon">⏰</div>
+                    <p><strong>El Tiempo que Desees</strong><br>Inicia con tus amistades</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon">🤝</div>
+                    <p><strong>Apoyo Constante</strong><br>Equipo que te respalda</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon">💎</div>
+                    <p><strong>Producto Premium</strong><br>Calidad excepcional</p>
+                </div>
+            </div>
+            <p>Lo mejor de todo: <strong>empiezas disfrutando el mejor café mientras conoces el negocio.</strong></p>
+        </div>
+        
+        <!-- Slide 5: Llamada a la Acción -->
+        <div class="slide">
+            <h2>¿Te Interesa Saber Más?</h2>
+            <div class="coffee-icon">🤔</div>
+            <p>No hay compromiso, solo una conversación amigable donde puedes hacer todas las preguntas que quieras.</p>
+            <div class="highlight">
+                <p><strong>¿Qué opinas? ¿Te gustaría que conversemos 15 minutos sobre esta oportunidad?</strong></p>
+            </div>
+            
+            <div class="decision-buttons">
+                <button class="decision-btn btn-yes" onclick="openWhatsApp()">
+                    🎉 ¡Sí, me interesa!
+                </button>
+                <button class="decision-btn btn-no" onclick="showResponse('no')">
+                    😊 No, gracias
+                </button>
+            </div>
+            
+            <div id="response-yes" class="response-message response-yes">
+                <h3>¡Excelente! 🎉</h3>
+                <p><strong>Me alegra mucho tu interés.</strong></p>
+                <p>Te enviaré un mensaje para coordinar una llamada de 15 minutos donde podrás conocer todos los detalles sin compromiso.</p>
+                <p>¡Estoy seguro de que te va a gustar lo que tengo para compartir contigo!</p>
+            </div>
+            
+            <div id="response-no" class="response-message response-no">
+                <h3>¡Totalmente entendible! 😊</h3>
+                <p><strong>Gracias por tu tiempo y por escuchar.</strong></p>
+                <p>No hay problema en absoluto. Aprecio tu honestidad y el tiempo que dedicaste a conocer sobre esta oportunidad.</p>
+                <p>¡Que tengas un excelente día!</p>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales para gestión de orientación
+        let orientacionActual = '';
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Función para detectar orientación con múltiples métodos
+        function detectarOrientacion() {
+            let orientacion = '';
+            
+            // Método 1: Screen Orientation API (moderno)
+            if (screen.orientation) {
+                orientacion = screen.orientation.type.includes('portrait') ? 'portrait' : 'landscape';
+            }
+            // Método 2: window.orientation (legacy)
+            else if (typeof window.orientation !== 'undefined') {
+                orientacion = (window.orientation === 0 || window.orientation === 180) ? 'portrait' : 'landscape';
+            }
+            // Método 3: dimensiones de pantalla (fallback)
+            else {
+                orientacion = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+            }
+            
+            return orientacion;
+        }
+        
+        // Función throttle para optimizar rendimiento
+        function throttle(func, delay) {
+            let timeoutId;
+            return (...args) => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+        
+        // Función para adaptar la presentación según orientación
+        function adaptarPresentacion(nuevaOrientacion) {
+            if (orientacionActual === nuevaOrientacion) return;
+            
+            console.log(`Cambiando orientación: ${orientacionActual} → ${nuevaOrientacion}`);
+            orientacionActual = nuevaOrientacion;
+            
+            // Aplicar clase específica de orientación
+            document.body.className = `orientacion-${nuevaOrientacion}`;
+            
+            // Recalcular dimensiones con retraso para completar animación
+            setTimeout(() => {
+                recalcularDimensiones();
+                ajustarContenidoSlides();
+            }, 150);
+        }
+        
+        // Función para recalcular dimensiones
+        function recalcularDimensiones() {
+            const container = document.querySelector('.presentation-container');
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            
+            // Ajustar altura mínima basada en orientación
+            if (orientacionActual === 'portrait') {
+                container.style.minHeight = Math.min(viewportHeight * 0.85, 600) + 'px';
+                container.style.maxWidth = Math.min(viewportWidth * 0.95, 500) + 'px';
+            } else {
+                container.style.minHeight = Math.min(viewportHeight * 0.90, 500) + 'px';
+                container.style.maxWidth = Math.min(viewportWidth * 0.85, 800) + 'px';
+            }
+        }
+        
+        // Función para ajustar contenido de slides
+        function ajustarContenidoSlides() {
+            const benefitsGrids = document.querySelectorAll('.benefits-grid');
+            
+            benefitsGrids.forEach(grid => {
+                if (orientacionActual === 'portrait') {
+                    grid.style.gridTemplateColumns = '1fr';
+                } else {
+                    grid.style.gridTemplateColumns = '1fr 1fr';
+                }
+            });
+        }
+        
+        // Event listeners optimizados para detectar cambios de orientación
+        const manejarCambioOrientacion = throttle(function() {
+            const nuevaOrientacion = detectarOrientacion();
+            adaptarPresentacion(nuevaOrientacion);
+        }, 100);
+        
+        const manejarRedimensionamiento = throttle(function() {
+            const nuevaOrientacion = detectarOrientacion();
+            adaptarPresentacion(nuevaOrientacion);
+        }, 150);
+        
+        // Función principal de navegación
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Actualizar botones de navegación
+            document.getElementById('prevBtn').disabled = (currentSlide === 0);
+            document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
+            
+            // Ocultar navegación en la última slide
+            if (currentSlide === totalSlides - 1) {
+                document.querySelector('.navigation').style.display = 'none';
+            } else {
+                document.querySelector('.navigation').style.display = 'flex';
+            }
+        }
+        
+        function changeSlide(n) {
+            if (currentSlide + n >= 0 && currentSlide + n < totalSlides) {
+                showSlide(currentSlide + n);
+            }
+        }
+        
+        function openWhatsApp() {
+            const phoneNumber = '+50378504789';
+            const message = 'Hola! Vi tu presentación sobre la oportunidad de café y me interesa saber más. ¿Podríamos conversar 15 minutos sobre esto?';
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Crear el enlace de WhatsApp
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Abrir WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Mostrar mensaje de confirmación después de un pequeño delay
+            setTimeout(() => {
+                showResponse('yes');
+            }, 1000);
+        }
+        
+        function showResponse(response) {
+            const decisionButtons = document.querySelector('.decision-buttons');
+            const responseYes = document.getElementById('response-yes');
+            const responseNo = document.getElementById('response-no');
+            
+            decisionButtons.style.display = 'none';
+            
+            if (response === 'yes') {
+                responseYes.style.display = 'block';
+                responseNo.style.display = 'none';
+            } else {
+                responseYes.style.display = 'none';
+                responseNo.style.display = 'block';
+            }
+        }
+        
+        // Función de inicialización
+        function inicializarPresentacion() {
+            // Configurar total de slides
+            document.getElementById('total-slides').textContent = totalSlides;
+            
+            // Detectar orientación inicial
+            orientacionActual = detectarOrientacion();
+            adaptarPresentacion(orientacionActual);
+            
+            // Configurar event listeners
+            if (screen.orientation) {
+                screen.orientation.addEventListener('change', manejarCambioOrientacion);
+            } else {
+                window.addEventListener('orientationchange', manejarCambioOrientacion);
+            }
+            
+            window.addEventListener('resize', manejarRedimensionamiento);
+            
+            // Configurar navegación inicial
+            showSlide(0);
+            
+            console.log('Presentación inicializada en orientación:', orientacionActual);
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // Navegación táctil para móviles
+        let startX = 0;
+        let startY = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+        
+        document.addEventListener('touchend', function(e) {
+            if (!startX || !startY) return;
+            
+            let endX = e.changedTouches[0].clientX;
+            let endY = e.changedTouches[0].clientY;
+            
+            let diffX = startX - endX;
+            let diffY = startY - endY;
+            
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 50) {
+                    changeSlide(1); // Deslizar izquierda = siguiente
+                } else if (diffX < -50) {
+                    changeSlide(-1); // Deslizar derecha = anterior
+                }
+            }
+            
+            startX = 0;
+            startY = 0;
+        });
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', inicializarPresentacion);
+        
+        // Fallback para navegadores antiguos
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inicializarPresentacion);
+        } else {
+            inicializarPresentacion();
+        }
+    </script>
+</body>
+</html>
